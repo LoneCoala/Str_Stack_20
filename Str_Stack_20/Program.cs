@@ -16,24 +16,37 @@ namespace Str_Stack_20
             string s;
             while ((s = sr.ReadLine()) != null) // пока файл не закончится
             {
+                string parsToInt = "";
                 for (int i = 0; i < s.Length; i++) // пока строка не закончится
                 {
                     int num;
-                    if (int.TryParse(s[i].ToString(), out num)) // преобразуем в число и записываем в соответсвующую очередь
+                    if ((i+1) < s.Length)
                     {
-                        if (num % 5 == 0)
+                        if ((s[i+1] != ' ') || s[i+1] != '\n') // пока можем записываем число
                         {
-                            div5.Enqueue(num);
+                            parsToInt += s[i];
                         }
-                        if ((num % 5 != 0) && (num % 2 == 0))
+                        if ((s[i + 1] == ' ') || s[i + 1] == '\n') // если встречаем пробел или переход на новую строку записываем число
                         {
-                            EvenNot5.Enqueue(num);
-                        }
-                        if ((num % 5 != 0) && (num % 2 != 0))
-                        {
-                            oddNot5.Enqueue(num);
+                            if (int.TryParse(parsToInt, out num)) // преобразуем в число и записываем в соответсвующую очередь
+                            {
+                                if (num % 5 == 0)
+                                {
+                                    div5.Enqueue(num);
+                                }
+                                if ((num % 5 != 0) && (num % 2 == 0))
+                                {
+                                    EvenNot5.Enqueue(num);
+                                }
+                                if ((num % 5 != 0) && (num % 2 != 0))
+                                {
+                                    oddNot5.Enqueue(num);
+                                }
+                            }
+                            parsToInt = "";
                         }
                     }
+
                 }
             }
 
